@@ -15,7 +15,7 @@ app.use(morgan("dev"));
 app.use(
   cors({
     credentials: true,
-    origin: "https://blogger-due9.onrender.com",
+    origin: "https://blogger-dxta.onrender.com",
   })
 );
 
