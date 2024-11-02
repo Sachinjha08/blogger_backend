@@ -29,14 +29,12 @@ exports.createBlogController = async (req, res) => {
       newBlog,
     });
   } catch (error) {
-    console.error(error);
-    if (!res.headersSent) {
-      res.status(500).send({
-        message: "Error while creating blog",
-        success: false,
-        error,
-      });
-    }
+    console.log(error);
+    res.status(500).send({
+      message: "Error while creating blog",
+      success: false,
+      error,
+    });
   }
 };
 
@@ -47,7 +45,8 @@ exports.updateBlogController = async (req, res) => {
     const blogId = req.params.id;
     const { title, img, dsc } = req.body;
 
-    const findBlog = await blogModel.findById(blogId);
+    const findBlog = await blogModel.findById({ _id: blogId });
+
     if (!findBlog) {
       return res.status(404).send({
         message: "Blog not found",
@@ -56,7 +55,7 @@ exports.updateBlogController = async (req, res) => {
     }
 
     const updateBlog = await blogModel.findByIdAndUpdate(
-      blogId,
+      { _id: blogId },
       { userId, title, img, dsc },
       { new: true }
     );
@@ -67,14 +66,12 @@ exports.updateBlogController = async (req, res) => {
       updateBlog,
     });
   } catch (error) {
-    console.error(error);
-    if (!res.headersSent) {
-      res.status(500).send({
-        message: "Error while updating blog",
-        success: false,
-        error,
-      });
-    }
+    console.log(error);
+    res.status(500).send({
+      message: "Error while updating blog",
+      success: false,
+      error,
+    });
   }
 };
 
@@ -85,6 +82,7 @@ exports.deleteBlogController = async (req, res) => {
     const blogId = req.params.id;
 
     const findBlog = await blogModel.findById(blogId);
+
     if (!findBlog) {
       return res.status(404).send({
         message: "Blog not found",
@@ -100,20 +98,19 @@ exports.deleteBlogController = async (req, res) => {
     }
 
     const deleteBlog = await blogModel.findByIdAndDelete(blogId);
+
     res.status(200).send({
       message: "Blog deleted successfully",
       success: true,
       deleteBlog,
     });
   } catch (error) {
-    console.error(error);
-    if (!res.headersSent) {
-      res.status(500).send({
-        message: "Error while deleting blog",
-        success: false,
-        error,
-      });
-    }
+    console.log(error);
+    res.status(500).send({
+      message: "Error while deleting blog",
+      success: false,
+      error,
+    });
   }
 };
 
@@ -135,14 +132,12 @@ exports.getAllBlogController = async (req, res) => {
       blogs,
     });
   } catch (error) {
-    console.error(error);
-    if (!res.headersSent) {
-      res.status(500).send({
-        message: "Error while retrieving blogs",
-        success: false,
-        error,
-      });
-    }
+    console.log(error);
+    res.status(500).send({
+      message: "Error while retrieving blogs",
+      success: false,
+      error,
+    });
   }
 };
 
@@ -165,13 +160,11 @@ exports.getMyBlogController = async (req, res) => {
       blogs,
     });
   } catch (error) {
-    console.error(error);
-    if (!res.headersSent) {
-      res.status(500).send({
-        message: "Error while fetching blogs",
-        success: false,
-        error,
-      });
-    }
+    console.log(error);
+    res.status(500).send({
+      message: "Error while fetching blogs",
+      success: false,
+      error,
+    });
   }
 };
